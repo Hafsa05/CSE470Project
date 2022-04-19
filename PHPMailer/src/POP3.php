@@ -1,6 +1,4 @@
 <?php
-
-
 namespace PHPMailer\PHPMailer;
 
 class POP3
@@ -41,13 +39,13 @@ class POP3
     public function authorise($host, $port = false, $timeout = false, $username = '', $password = '', $debug_level = 0)
     {
         $this->host = $host;
-        // If no port value provided, use default
+       
         if (false === $port) {
             $this->port = static::DEFAULT_PORT;
         } else {
             $this->port = (int) $port;
         }
-        // If no timeout value provided, use default
+        
         if (false === $timeout) {
             $this->tval = static::DEFAULT_TIMEOUT;
         } else {
@@ -56,7 +54,7 @@ class POP3
         $this->do_debug = $debug_level;
         $this->username = $username;
         $this->password = $password;
-        //  Reset the error log
+        
         $this->errors = [];
         //  connect
         $result = $this->connect($this->host, $this->port, $this->tval);
@@ -68,7 +66,7 @@ class POP3
                 return true;
             }
         }
-        // We need to disconnect regardless of whether the login succeeded
+     
         $this->disconnect();
 
         return false;
@@ -77,13 +75,12 @@ class POP3
 
     public function connect($host, $port = false, $tval = 30)
     {
-        //  Are we already connected?
+        //  already connected?
         if ($this->connected) {
             return true;
         }
 
-        //On Windows this will raise a PHP Warning error if the hostname doesn't exist.
-        //Rather than suppress it with @fsockopen, capture it cleanly instead
+       
         set_error_handler([$this, 'catchWarning']);
 
         if (false === $port) {
@@ -103,7 +100,7 @@ class POP3
         //  Restore the error handler
         restore_error_handler();
 
-        //  Did we connect?
+        //  Did it connected?
         if (false === $this->pop_conn) {
             //  It would appear not...
             $this->setError(
@@ -113,14 +110,13 @@ class POP3
             return false;
         }
 
-        //  Increase the stream time-out
+        
         stream_set_timeout($this->pop_conn, $tval, 0);
 
-        //  Get the POP3 server response
         $pop3_response = $this->getResponse();
-        //  Check for the +OK
+
         if ($this->checkResponse($pop3_response)) {
-            //  The connection is established and the POP3 server is talking
+            
             $this->connected = true;
 
             return true;
@@ -143,7 +139,7 @@ class POP3
             $password = $this->password;
         }
 
-        // Send the Username
+        // Send Username
         $this->sendString("USER $username" . static::LE);
         $pop3_response = $this->getResponse();
         if ($this->checkResponse($pop3_response)) {
@@ -163,8 +159,6 @@ class POP3
     public function disconnect()
     {
         $this->sendString('QUIT');
-        //The QUIT command may cause the daemon to exit, which will kill our connection
-        //So ignore errors here
         try {
             @fclose($this->pop_conn);
         } catch (Exception $e) {

@@ -1,12 +1,3 @@
-/*
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-[ COMMON SCRIPTS ]
-AUTHOR :VIJAYAN PP
-PROJECT :NIM
-VERSION : 1.1
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-*/
-
 (function($) {
 	"use strict";
 
@@ -150,10 +141,6 @@ VERSION : 1.1
 })(jQuery);
 
 
-
-/*+++++++++++++++++++++++++COMMON FUNCTIONS++++++++++++++++++++++++++++*/
-
-/*KENBERG SLIDER*/
 
  var fullscreenslider=function()
   {

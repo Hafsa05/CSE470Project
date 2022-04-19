@@ -19,7 +19,6 @@
 
 	};
 
-	// the options
 	$.HoverDir.defaults = {
 		speed : 300,
 		easing : 'ease',
@@ -31,13 +30,9 @@
 
 		_init : function( options ) {
 			
-			// options
 			this.options = $.extend( true, {}, $.HoverDir.defaults, options );
-			// transition properties
 			this.transitionProp = 'all ' + this.options.speed + 'ms ' + this.options.easing;
-			// support for CSS transitions
 			this.support = Modernizr.csstransitions;
-			// load the events
 			this._loadEvents();
 
 		},
@@ -86,23 +81,15 @@
 			} );
 
 		},
-		// credits : http://stackoverflow.com/a/3647634
 		_getDir : function( $el, coordinates ) {
 			
-			// the width and height of the current div
+			// the width and height of the div
 			var w = $el.width(),
 				h = $el.height(),
 
-				// calculate the x and y to get an angle to the center of the div from that x and y.
-				// gets the x value relative to the center of the DIV and "normalize" it
 				x = ( coordinates.x - $el.offset().left - ( w/2 )) * ( w > h ? ( h/w ) : 1 ),
 				y = ( coordinates.y - $el.offset().top  - ( h/2 )) * ( h > w ? ( w/h ) : 1 ),
-			
-				// the angle and the direction from where the mouse came in/went out clockwise (TRBL=0123);
-				// first calculate the angle of the point,
-				// add 180 deg to get rid of the negative values
-				// divide by 90 to get the quadrant
-				// add 3 and do a modulo by 4  to shift the quadrants to a proper clockwise TRBL (top/right/bottom/left) **/
+			    
 				direction = Math.round( ( ( ( Math.atan2(y, x) * (180 / Math.PI) ) + 180 ) / 90 ) + 3 ) % 4;
 			
 			return direction;
@@ -144,7 +131,7 @@
 			return { from : fromStyle, to : toStyle };
 					
 		},
-		// apply a transition or fallback to jquery animate based on Modernizr.csstransitions support
+		
 		_applyAnimation : function( el, styleCSS, speed ) {
 
 			$.fn.applyStyle = this.support ? $.fn.css : $.fn.animate;

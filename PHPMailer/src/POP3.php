@@ -75,7 +75,6 @@ class POP3
 
     public function connect($host, $port = false, $tval = 30)
     {
-        //  already connected?
         if ($this->connected) {
             return true;
         }
@@ -96,13 +95,12 @@ class POP3
             $errno, //  Error Number
             $errstr, //  Error Message
             $tval
-        ); //  Timeout (seconds)
-        //  Restore the error handler
+        ); 
+
         restore_error_handler();
 
         //  Did it connected?
         if (false === $this->pop_conn) {
-            //  It would appear not...
             $this->setError(
                 "Failed to connect to server $host on port $port. errno: $errno; errstr: $errstr"
             );
@@ -162,7 +160,6 @@ class POP3
         try {
             @fclose($this->pop_conn);
         } catch (Exception $e) {
-            //Do nothing
         }
     }
 
@@ -237,3 +234,4 @@ class POP3
         );
     }
 }
+
